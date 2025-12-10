@@ -86,7 +86,7 @@ Grafana login:
 ```
 URL: http://localhost:3000
 User: admin
-Pass: admin
+Pass: asd123asd
 ```
 
 Dashboards include:
