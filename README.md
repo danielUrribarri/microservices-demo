@@ -27,9 +27,8 @@ pagila/
 
 ## 🏗️ Architecture Diagram
 
-```
+
 ![System Architecture](doc/DemoDraw.drawio.png)
-```
 
 ---
 
