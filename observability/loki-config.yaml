@@ -1,0 +1,44 @@
+auth_enabled: false
+
+server:
+  http_listen_port: 3100
+  grpc_listen_port: 9095
+
+common:
+  path_prefix: /loki
+  replication_factor: 1
+
+schema_config:
+  configs:
+    - from: 2024-01-01
+      store: tsdb
+      object_store: filesystem
+      schema: v13
+      index:
+        prefix: index_
+        period: 24h
+
+storage_config:
+  filesystem:
+    directory: /loki/data
+
+ingester:
+  chunk_idle_period: 5m
+  chunk_target_size: 1048576
+  max_chunk_age: 1h
+  lifecycler:
+    ring:
+      kvstore:
+        store: inmemory
+      replication_factor: 1
+
+limits_config:
+  ingestion_rate_mb: 10
+  ingestion_burst_size_mb: 20
+  max_entries_limit_per_query: 5000
+
+frontend:
+  max_outstanding_per_tenant: 1024
+
+analytics:
+  reporting_enabled: false

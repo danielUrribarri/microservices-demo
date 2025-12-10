@@ -1,0 +1,40 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+  postgresql:
+   endpoint: postgres:5432
+   username: postgres
+   password: postgres
+   databases:
+          - pagila
+   transport: tcp
+   tls:
+     insecure: true
+     insecure_skip_verify: true
+
+exporters:
+  debug:
+    verbosity: detailed
+
+  prometheus:
+    endpoint: "0.0.0.0:9464"
+
+  otlp:
+    endpoint: tempo:4317
+    tls:
+      insecure: true
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [debug, otlp]
+
+    metrics:
+      receivers: [otlp, postgresql]
+      exporters: [prometheus]
